@@ -1,6 +1,8 @@
 const express = require('express')
 const config = require('./config/app')
 
+require('dotenv').config()
+
 const app = express()
 
 app.get('/home', (req, res) => {
