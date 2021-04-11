@@ -1,18 +1,17 @@
 const express = require('express')
-const config = require('./config/app')
-
-require('dotenv').config()
-
+const config = require('./config/app');
+const router = require('./router');
+const cors = require('cors')
 const app = express()
 
-app.get('/home', (req, res) => {
-    return res.send("Home Sweet Home");
-});
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(cors());
+app.use(router);
 
-app.get('/boss', (req, res) => {
-    return res.send("Home Sweet Bome");
-});
-const port = process.env.APP_PORT;
+
+
+const port = config.appPort;
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`); 
