@@ -1,10 +1,33 @@
-import React from 'react'
+import React, {useState} from 'react'
 import registerImage from '../../assets/images/growth.svg'
-
+import {useDispatch} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {register} from '../../store/actions/auth'
 
 import './Auth.scss'
-const Register = () => {
+const Register = ({history}) => {
+
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+
+        firstName: '',
+        lastName: '',
+        gender: ''
+    });
+
+    const dispatch = useDispatch()
+    const onChangeCustom = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const { email, password, firstName, lastName, gender } = formData;
+
+    
+    const submitForm = (e) => {
+        e.preventDefault()
+
+        dispatch(register({email, password, firstName, lastName, gender}, history))
+    }
+
      return (
          <div id='auth-container'>
             <div id = 'auth-card'>
@@ -16,20 +39,33 @@ const Register = () => {
                     <div id='form-section'>
                         <h2>Create an account</h2>
                     
-                        <form>
+                        <form onSubmit = {submitForm}> 
+
                             <div className="input-field mb-1">
-                                <input placeholder='Email'/ >
+                            <input type="email" placeholder="Email Address" name="email" value={ email } onChange={e => onChangeCustom(e)} required/>
+                          
                             </div>
+                            <div className="input-field mb-1">
+                            <input
+                                type="password"
+                                placeholder="Password"
+                                name="password"
+                                minLength="6"
+                                value={password}
+                                onChange={e => onChangeCustom(e)}
+                                required
+                            />
+                            </div>
+
+                            <div className="input-field mb-1">
+                                <input type="text" placeholder="Name" name="firstName" required value={ firstName }  onChange={e => onChangeCustom(e)} required/>
+                            </div>
+
+                            <div className="input-field mb-1">
+                                <input type="text" placeholder="Name" name="lastName" required value={ lastName }  onChange={e => onChangeCustom(e)} required/>
+                            </div>
+            
                             <div className="input-field mb-2">
-                                <input placeholder='Password'/ >
-                            </div>
-                            <div className="input-field mb-1">
-                                <input placeholder='FirstName'/ >
-                            </div>
-                            <div className="input-field mb-1">
-                                <input placeholder='LastName'/ >
-                            </div>
-                            <div className="input-field mb-1">
                                 <select>
                                      <option value='male'>Male</option>
                                      <option value='female'>Female</option>

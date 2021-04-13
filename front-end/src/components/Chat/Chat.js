@@ -1,14 +1,13 @@
-const Chat = () => {
-    return (
-        <div id='auth-container'>
-           <div id = 'auth-card'>
-               <div className='card-shadow'>
+import React from 'react'
+import { useSelector } from 'react-redux'
 
-                   <div id='form-section'>
-                       <h2>Create an account</h2>
-                   </div>
-               </div>
-           </div>
+const Chat = () => {
+   
+    const user = useSelector(state => state.authReducer.user)
+
+    return (
+        <div>
+            <h1>Welcome, {user.firstName}</h1>
         </div>
     );
 }

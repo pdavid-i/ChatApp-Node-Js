@@ -5,16 +5,19 @@ import './Auth.scss'
 import AuthService from '../../services/authService'
 import axios from 'axios'
 
-const Login = () => {
+import {login} from '../../store/actions/auth'
+import { useDispatch } from 'react-redux'
+
+const Login = ({history}) => {
 
     const [email, setEmail] = useState('john.doe@gmail.com')
     const [password, setPassword] = useState('secret')
+    const dispatch = useDispatch()
 
     const submitForm = (e) => {
         e.preventDefault()
 
-       AuthService.login({ email, password }).then(res => console.log(res))
-        console.log({email, password}); 
+        dispatch(login({email, password}, history))
     }
      return (
          <div id='auth-container'>
